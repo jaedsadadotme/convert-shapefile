@@ -1,0 +1,4 @@
+PyShp 
+Flask
+flask_cors
+pandas
