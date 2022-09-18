@@ -14,7 +14,7 @@ def swapCoordinate(coordinates) :
     return new_coordinate
 
 
-def getLatLongFromShapeFile() :
+def getLatLongFromShapeFile(shp_file) :
     geojson_data = shapefile.Reader(shp_file, encoding = 'unicode_escape').__geo_interface__
 
     id = 0
