@@ -2,3 +2,10 @@ PyShp
 Flask
 flask_cors
 pandas
+geopandas
+matplotlib
+geopandas
+pyproj
+patool
+rarfile
+pyunpack

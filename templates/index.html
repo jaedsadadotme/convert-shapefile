@@ -41,12 +41,27 @@
 <body>
 	<div style="padding: 3rem;">
 		<div>
-			.Shp: 
-			<input class="file" type="file" name="shp" id="shp">
+			<div>
+				.Zip: 
+				<input class="file" type="file" name="zip" id="zip">
+			</div>
 			<br>
-			<br>
-			.Dbf: 
-			<input class="file" type="file" name="dbf" id="dpf">
+			<div>
+				<button onclick="uploadZip()">upload zip</button>
+			</div>
+			<hr> or 
+			<div>
+				.Shp: 
+				<input class="file" type="file" name="shp" id="shp">
+				.Dbf: 
+				<input class="file" type="file" name="dbf" id="dpf">
+				<br>
+				<br>
+				.Shx: 
+				<input class="file" type="file" name="shx" id="shx">
+				.Prj: 
+				<input class="file" type="file" name="prj" id="prj">
+			</div>
 		</div>
 		<br>
 		<div>
@@ -61,10 +76,35 @@
 	function upload() {
 		const shp = document.querySelector('[name=shp]').files;
 		const dbf = document.querySelector('[name=dbf]').files;
+		const shx = document.querySelector('[name=shx]').files;
+		const prj = document.querySelector('[name=prj]').files;
+
 		const formData = new FormData();
 		formData.append('shp', shp[0]);
 		formData.append('dbf', dbf[0]);
+		formData.append('shx', shx[0]);
+		formData.append('prj', prj[0]);
+		console.log(formData);
 		const url = "/api/data";
+		let xhr = new XMLHttpRequest()
+		
+		xhr.open('POST', url, true)
+		// xhr.setRequestHeader'Content-type', 'application/json; charset=UTF-8')
+		xhr.send(formData);
+		
+		xhr.onload = function () {
+			if(xhr.status === 200) {
+				window.location.href = "?file="+xhr.responseText
+			}
+		}
+	}
+	function uploadZip() {
+		const zip = document.querySelector('[name=zip]').files;
+
+		const formData = new FormData();
+		formData.append('zip', zip[0]);
+		console.log(formData);
+		const url = "/api/data/zipfile";
 		let xhr = new XMLHttpRequest()
 		
 		xhr.open('POST', url, true)
@@ -83,23 +123,18 @@
 		if(container != null){
 			container._leaflet_id = null;
 		}
-		var map = L.map('map').setView([coordinates[0][0],coordinates[0][1]], 9);
+		var map = L.map('map').setView([coordinates[0][0],coordinates[0][1]], 15);
+
+		var tiles = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+			attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
+		}).addTo(map);;
 
 		var tiles = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-			maxZoom: 19,
+			maxZoom: 25,
 			attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-		}).addTo(map);
+		})
 
 		var polygon = L.polygon([coordinates]).addTo(map).bindPopup('I am a polygon.');
-
-		// function onMapClick(e) {
-		// 	popup
-		// 		.setLatLng(e.latlng)
-		// 		.setContent('You clicked the map at ' + e.latlng.toString())
-		// 		.openOn(map);
-		// }
-
-		// map.on('click', onMapClick);
 	}
 	
 	function getData() {
@@ -108,13 +143,13 @@
 			xmlHttp.open( "GET", "/api/data?file="+window.location.search.substring(1).split("=")[1], false ); // false for synchronous request
 			xmlHttp.send( null );
 		}else{
-			xmlHttp.open( "GET", "/api/data?file=979fc2b6b36d3aae-polygon.shp", false ); // false for synchronous request
+			xmlHttp.open( "GET", "/api/data?file=shapefile_test.shp", false ); // false for synchronous request
 			xmlHttp.send( null );
 		}
 		data = JSON.parse(xmlHttp.responseText)
+		console.log(data);
 		let coordinates = data.features[0].geometry.coordinates
-		initMap(data.bbox.reverse(),coordinates)
-		// return JSON.parse(xmlHttp.responseText)
+		initMap(data.features[0].bbox,coordinates)
 	}
 	getData()
 
