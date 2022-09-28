@@ -14,7 +14,7 @@ def hello():
 
 @app.route('/api/data')
 def hello_world():
-    response = getLatLongFromShapeFile("shapefile/"+os.path.splitext(request.args['file'])[0]+"/"+request.args['file'])
+    response = getLatLongFromShapeFile("shapefile/"+os.path.splitext(request.args['file'])[0])
     return response
 
 @app.route('/api/data', methods=['POST'])
@@ -53,12 +53,12 @@ def uploadZip():
     open(fn, 'wb').write(record1.read())
 
     # patoolib.extract_archive("zip/"+record1.filename, "shapefile/"+os.path.splitext(record1.filename)[0]+"/"+os.path.splitext(record1.filename)[0]+".shp")
-
+    print("shapefile/"+os.path.splitext(record1.filename)[0])
     with zipfile.ZipFile("zip/"+record1.filename,"r") as zip_ref:
-        zip_ref.extractall("shapefile/"+os.path.splitext(record1.filename)[0]+"/"+os.path.splitext(record1.filename)[0]+".shp")
+        zip_ref.extractall("shapefile/"+os.path.splitext(record1.filename)[0])
     # print(record)
     # response = getLatLongFromShapeFile("shapefile/"+record1.filename)
-    return os.path.splitext(record1.filename)[0]+".shp"
+    return os.path.splitext(record1.filename)[0]
 
 # main driver function
 if __name__ == '__main__':

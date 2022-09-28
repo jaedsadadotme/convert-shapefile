@@ -67,12 +67,20 @@
 		<div>
 			<button onclick="upload()">upload</button>
 		</div>
-		<div style="padding-top: 1rem;">
+		<div style="padding-top: 1rem;padding-bottom: 1rem;">
 			<div id="map"></div>
 		</div>
+		<!-- <div>
+			<div style="border: 1px solid;width: 30px;height: 30px;display: inline-block;" onclick="">A</div>
+			<div style="border: 1px solid;width: 30px;height: 30px;display: inline-block;">B</div>
+		</div> -->
 	</div>
 </body>
 <script>
+	function changeTile(){
+
+	}
+
 	function upload() {
 		const shp = document.querySelector('[name=shp]').files;
 		const dbf = document.querySelector('[name=dbf]').files;
@@ -140,14 +148,13 @@
 	function getData() {
 		var xmlHttp = new XMLHttpRequest();
 		if(window.location.search.substring(1).split("=")[0] == "file"){
-			xmlHttp.open( "GET", "/api/data?file="+window.location.search.substring(1).split("=")[1], false ); // false for synchronous request
+			xmlHttp.open( "GET", "/api/data?file="+window.location.search.substring(1).split("=")[1].split(".shp")[0], false ); // false for synchronous request
 			xmlHttp.send( null );
 		}else{
-			xmlHttp.open( "GET", "/api/data?file=shapefile_test.shp", false ); // false for synchronous request
+			xmlHttp.open( "GET", "/api/data?file=shapefile_test", false ); // false for synchronous request
 			xmlHttp.send( null );
 		}
 		data = JSON.parse(xmlHttp.responseText)
-		console.log(data);
 		let coordinates = data.features[0].geometry.coordinates
 		initMap(data.features[0].bbox,coordinates)
 	}

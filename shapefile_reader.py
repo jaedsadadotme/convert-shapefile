@@ -1,7 +1,7 @@
 import string
 import shapefile
 import pandas as pd
-import json
+import json,os
 import geopandas,pandas
 
 shp_file = "./shapefile/other/979fc2b6b36d3aae-polygon.shp"
@@ -18,6 +18,8 @@ def swapCoordinate(coordinates) :
     return new_coordinate
 
 def getLatLongFromShapeFile(shp_file) :
+    # files = os.listdir(os.path.splitext(shp_file)[0])
+    # print(files)
     geojson_data = geopandas.read_file(shp_file)
     old_crs = geojson_data.crs
     data = geojson_data.to_crs(epsg = 4326)
