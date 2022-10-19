@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2" xmlns:gx="http://www.google.com/kml/ext/2.2" xmlns:kml="http://www.opengis.net/kml/2.2" xmlns:atom="http://www.w3.org/2005/Atom">
+<Document>
+	<name>shapefile_test.shp</name>
+	<Schema name="shapefile_test" id="S_shapefile_test_SSD">
+		<SimpleField type="string" name="Name"><displayName>&lt;b&gt;Name&lt;/b&gt;</displayName>
+</SimpleField>
+		<SimpleField type="string" name="FolderPath"><displayName>&lt;b&gt;FolderPath&lt;/b&gt;</displayName>
+</SimpleField>
+		<SimpleField type="double" name="ID"><displayName>&lt;b&gt;ID&lt;/b&gt;</displayName>
+</SimpleField>
+	</Schema>
+	<Style id="falseColor">
+		<BalloonStyle>
+			<text><![CDATA[<table border="0">
+  <tr><td><b>Name</b></td><td>$[shapefile_test/Name]</td></tr>
+  <tr><td><b>FolderPath</b></td><td>$[shapefile_test/FolderPath]</td></tr>
+  <tr><td><b>ID</b></td><td>$[shapefile_test/ID]</td></tr>
+</table>
+]]></text>
+		</BalloonStyle>
+		<PolyStyle>
+			<colorMode>random</colorMode>
+		</PolyStyle>
+	</Style>
+	<Folder id="layer 0">
+		<name>shapefile_test</name>
+		<Placemark>
+			<styleUrl>#falseColor</styleUrl>
+			<Style id="inline">
+				<IconStyle>
+					<color>ffe7ebef</color>
+					<colorMode>normal</colorMode>
+				</IconStyle>
+				<LineStyle>
+					<color>ffe7ebef</color>
+					<colorMode>normal</colorMode>
+				</LineStyle>
+				<PolyStyle>
+					<color>ffe7ebef</color>
+					<colorMode>normal</colorMode>
+				</PolyStyle>
+			</Style>
+			<ExtendedData>
+				<SchemaData schemaUrl="#S_shapefile_test_SSD">
+					<SimpleData name="Name">5203616017</SimpleData>
+					<SimpleData name="FolderPath">แปลงรื้อถอน57-65/แปลงรื้อถอนปี57</SimpleData>
+					<SimpleData name="ID">1</SimpleData>
+				</SchemaData>
+			</ExtendedData>
+			<Polygon>
+				<outerBoundaryIs>
+					<LinearRing>
+						<coordinates>
+							98.36123600000008,8.897381000000042,0 98.36054400000006,8.897832000000069,0 98.36067000000001,8.898791000000079,0 98.35985000000007,8.899504000000039,0 98.36031100000008,8.901251000000062,0 98.35810900000003,8.901355000000034,0 98.35779400000003,8.899672000000072,0 98.36028200000004,8.89682800000001,0 98.36053700000004,8.896855000000086,0 98.36086399999999,8.896783000000044,0 98.36123600000008,8.897381000000042,0 
+						</coordinates>
+					</LinearRing>
+				</outerBoundaryIs>
+			</Polygon>
+		</Placemark>
+	</Folder>
+</Document>
+</kml>

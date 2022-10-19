@@ -16,11 +16,15 @@ def swapCoordinate(coordinates) :
 
 def getLatLongFromShapeFile(shp_file) :
     geojson_data = shapefile.Reader(shp_file, encoding = 'unicode_escape').__geo_interface__
+    coordinates = []
+    for id, features in enumerate(geojson_data['features']):
+        # coordinates.append(swapCoordinate(features["geometry"]["coordinates"]))
+        geojson_data["features"][id]["geometry"]["coordinates"] = swapCoordinate(features["geometry"]["coordinates"])
 
-    id = 0
-    coordinates = geojson_data["features"][id]["geometry"]["coordinates"]
+
+    # id = 0
     
-    geojson_data["features"][id]["geometry"]["coordinates"] = swapCoordinate(coordinates)
+    
     return geojson_data
 
-# getLatLongFromShapeFile()
+# getLatLongFromShapeFile("./shapefile/shapefile_test.shp")
