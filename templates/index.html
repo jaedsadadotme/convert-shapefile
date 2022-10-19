@@ -41,30 +41,78 @@
 <body>
 	<div style="padding: 3rem;">
 		<div>
-			.Shp: 
-			<input class="file" type="file" name="shp" id="shp">
+			<div>
+				.Zip: 
+				<input class="file" type="file" name="zip" id="zip">
+			</div>
 			<br>
-			<br>
-			.Dbf: 
-			<input class="file" type="file" name="dbf" id="dpf">
+			<div>
+				<button onclick="uploadZip()">upload zip</button>
+			</div>
+			<hr> or 
+			<div>
+				.Shp: 
+				<input class="file" type="file" name="shp" id="shp">
+				.Dbf: 
+				<input class="file" type="file" name="dbf" id="dpf">
+				<br>
+				<br>
+				.Shx: 
+				<input class="file" type="file" name="shx" id="shx">
+				.Prj: 
+				<input class="file" type="file" name="prj" id="prj">
+			</div>
 		</div>
 		<br>
 		<div>
 			<button onclick="upload()">upload</button>
 		</div>
-		<div style="padding-top: 1rem;">
+		<div style="padding-top: 1rem;padding-bottom: 1rem;">
 			<div id="map"></div>
 		</div>
+		<!-- <div>
+			<div style="border: 1px solid;width: 30px;height: 30px;display: inline-block;" onclick="">A</div>
+			<div style="border: 1px solid;width: 30px;height: 30px;display: inline-block;">B</div>
+		</div> -->
 	</div>
 </body>
 <script>
+	function changeTile(){
+
+	}
+
 	function upload() {
 		const shp = document.querySelector('[name=shp]').files;
 		const dbf = document.querySelector('[name=dbf]').files;
+		const shx = document.querySelector('[name=shx]').files;
+		const prj = document.querySelector('[name=prj]').files;
+
 		const formData = new FormData();
 		formData.append('shp', shp[0]);
 		formData.append('dbf', dbf[0]);
+		formData.append('shx', shx[0]);
+		formData.append('prj', prj[0]);
+		console.log(formData);
 		const url = "/api/data";
+		let xhr = new XMLHttpRequest()
+		
+		xhr.open('POST', url, true)
+		// xhr.setRequestHeader'Content-type', 'application/json; charset=UTF-8')
+		xhr.send(formData);
+		
+		xhr.onload = function () {
+			if(xhr.status === 200) {
+				window.location.href = "?file="+xhr.responseText
+			}
+		}
+	}
+	function uploadZip() {
+		const zip = document.querySelector('[name=zip]').files;
+
+		const formData = new FormData();
+		formData.append('zip', zip[0]);
+		console.log(formData);
+		const url = "/api/data/zipfile";
 		let xhr = new XMLHttpRequest()
 		
 		xhr.open('POST', url, true)
@@ -108,10 +156,10 @@
 	function getData() {
 		var xmlHttp = new XMLHttpRequest();
 		if(window.location.search.substring(1).split("=")[0] == "file"){
-			xmlHttp.open( "GET", "/api/data?file="+window.location.search.substring(1).split("=")[1], false ); // false for synchronous request
+			xmlHttp.open( "GET", "/api/data?file="+window.location.search.substring(1).split("=")[1].split(".shp")[0], false ); // false for synchronous request
 			xmlHttp.send( null );
 		}else{
-			xmlHttp.open( "GET", "/api/data?file=979fc2b6b36d3aae-polygon.shp", false ); // false for synchronous request
+			xmlHttp.open( "GET", "/api/data?file=shapefile_test", false ); // false for synchronous request
 			xmlHttp.send( null );
 		}
 		data = JSON.parse(xmlHttp.responseText)
