@@ -36,21 +36,18 @@ def getLatLongFromShapeFile(shp_file) :
     # id = 0
     
 def _convertShapefile(shp_file) :
-    print(shp_file)
-    geojson_data = shapefile.Reader(shp_file, encoding = 'unicode_escape').__geo_interface__
+    # geojson_data = shapefile.Reader(shp_file, encoding = 'unicode_escape').__geo_interface__
 
     data = geopandas.read_file(shp_file)
     # change CRS to epsg 4326
     data = data.to_crs(epsg=4326)
-    # coordinates = []
-    # geojson_data = data.to_json()
-    
+    # print(data.centroid.to_json())
     geojson_data = json.loads(data.to_json())
     for id , features in enumerate(geojson_data['features']):
         # coordinates.append(swapCoordinate(features["geometry"]["coordinates"]))
         geojson_data["features"][id]["geometry"]["coordinates"] = swapCoordinate(features["geometry"]["coordinates"])
     
-    print(geojson_data)
+    geojson_data["bbox"] = json.loads(data.centroid.to_json())
     return geojson_data
 
-getLatLongFromShapeFile("shapefile/aaa")
+# getLatLongFromShapeFile("shapefile/aaa")

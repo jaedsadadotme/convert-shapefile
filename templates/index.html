@@ -168,8 +168,7 @@
 			coordinates.push(features.geometry.coordinates)
 		})
 		//  = data.features[0].geometry.coordinates
-		// console.log(data.bbox);
-		initMap(coordinates[0],coordinates)
+		initMap([data.bbox[0],data.bbox[1]],coordinates)
 		// return JSON.parse(xmlHttp.responseText)
 	}
 	getData()
