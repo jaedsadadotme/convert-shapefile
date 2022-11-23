@@ -14,7 +14,7 @@ def hello():
 
 @app.route('/api/data')
 def hello_world():
-    response = getLatLongFromShapeFile("shapefile/"+os.path.splitext(request.args['file'])[0])
+    response = getLatLongFromShapeFile("shapefile/"+request.args['file'])
     return response
 
 @app.route('/api/data', methods=['POST'])

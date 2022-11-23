@@ -159,7 +159,7 @@
 			xmlHttp.open( "GET", "/api/data?file="+window.location.search.substring(1).split("=")[1].split(".shp")[0], false ); // false for synchronous request
 			xmlHttp.send( null );
 		}else{
-			xmlHttp.open( "GET", "/api/data?file=shapefile_test", false ); // false for synchronous request
+			xmlHttp.open( "GET", "/api/data?file=polygon-polygon", false ); // false for synchronous request
 			xmlHttp.send( null );
 		}
 		data = JSON.parse(xmlHttp.responseText)
@@ -168,7 +168,8 @@
 			coordinates.push(features.geometry.coordinates)
 		})
 		//  = data.features[0].geometry.coordinates
-		initMap(data.bbox.reverse(),coordinates)
+		// console.log(data.bbox);
+		initMap(coordinates[0],coordinates)
 		// return JSON.parse(xmlHttp.responseText)
 	}
 	getData()
